@@ -70,8 +70,11 @@ Note: Python on this system is `python3` (3.12.0), not `python`.
 | `src/CXq_data/processing/schemas.py` | `DAILY_OHLCV_SCHEMA` — canonical Polars column/type definition |
 | `src/CXq_data/processing/partitioner.py` | Hive-partitioned Parquet writer |
 | `src/CXq_data/storage/duckdb_manager.py` | DuckDB connection and view creation |
+| `src/CXq_data/storage/paths.py` | Centralized path resolution for raw/processed/duckdb dirs |
 | `src/CXq_data/config/settings.py` | Pydantic BaseSettings with TOML support |
-| `src/CXq_data/validation/checks.py` | Four data quality check functions |
+| `src/CXq_data/validation/checks.py` | Four data quality checks (gaps, price sanity, stale data, OHLC consistency) |
+| `src/CXq_data/validation/runner.py` | Orchestrates all checks, produces `CheckReport` |
+| `src/CXq_data/utils/rate_limiter.py` | Rate limiting for API calls |
 | `scripts/upload_options_to_s3.py` | Standalone options pipeline (Databento → S3) |
 
 ## Testing
