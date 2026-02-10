@@ -39,4 +39,4 @@ htmlcov/
 .ruff_cache/
 
 # AI
-.claude
+.claude/
