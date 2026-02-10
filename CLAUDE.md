@@ -12,7 +12,6 @@ Stock market data ingestion, normalization, storage, and serving infrastructure.
 # Setup
 python3 -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"            # Core + dev dependencies
-pip install -e ".[pipeline]"       # Options pipeline (databento, boto3)
 
 # Tests
 pytest                             # All tests
@@ -75,15 +74,10 @@ Note: Python on this system is `python3` (3.12.0), not `python`.
 | `src/CXq_data/validation/checks.py` | Four data quality checks (gaps, price sanity, stale data, OHLC consistency) |
 | `src/CXq_data/validation/runner.py` | Orchestrates all checks, produces `CheckReport` |
 | `src/CXq_data/utils/rate_limiter.py` | Rate limiting for API calls |
-| `scripts/upload_options_to_s3.py` | Standalone options pipeline (Databento → S3) |
 
 ## Testing
 
-Shared fixtures in `tests/conftest.py`: `tmp_data_dir` (temp raw/processed dirs), `sample_ohlcv_df` (canonical Polars DataFrame), `sample_yfinance_csv`, `sample_stooq_csv`. Pipeline tests in `tests/test_pipeline/` use `moto` for mock S3.
-
-## Options Pipeline
-
-Standalone script (not part of main CLI) at `scripts/upload_options_to_s3.py` with modules in `scripts/_options_pipeline/`. Converts Databento `.dbn.zst` files to Parquet and uploads to S3. Key design: one-file-at-a-time extraction, atomic state writes (fsync + os.replace), graceful shutdown on SIGINT, resume support.
+Shared fixtures in `tests/conftest.py`: `tmp_data_dir` (temp raw/processed dirs), `sample_ohlcv_df` (canonical Polars DataFrame), `sample_yfinance_csv`, `sample_stooq_csv`.
 
 ## Code Style
 
